@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "32842677535",
+    "firebase_url": "https://messagingapp-f1234.firebaseio.com",
+    "project_id": "messagingapp-f1234",
+    "storage_bucket": "messagingapp-f1234.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32842677535:android:899d9f6be2d6dc3e74c42a",
+        "android_client_info": {
+          "package_name": "com.example.messagingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32842677535-g0grt78omu21sjhe6vomlp8do0et6ei4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Ca1dPQz9IHKDqOQR_aLUL4I1Z8Sarx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32842677535-g0grt78omu21sjhe6vomlp8do0et6ei4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
