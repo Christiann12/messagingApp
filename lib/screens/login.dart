@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:messagingapp/constants.dart';
+import 'package:messagingapp/classes/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:messagingapp/process/authProcess.dart';
+
+final databaseReference = Firestore.instance;
+
+final AuthProcess _authProcess = AuthProcess();
 
 class Login extends StatefulWidget {
   @override
@@ -7,6 +13,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  void createRecord() async {
+    await databaseReference.collection("books").document("qwerrt").setData({
+      'title': 'Mastering Flutter',
+      'description': 'Programming Guide for Dart'
+    });
+
+    DocumentReference ref = await databaseReference.collection("books").add({
+      'title': 'Flutter in Action',
+      'description': 'Complete Programming Guide to learn Flutter'
+    });
+    print(ref.documentID);
+  }
+  
   @override
   Widget build(BuildContext context) {
     var checkBoxValue = false;
@@ -124,7 +144,15 @@ class _LoginState extends State<Login> {
               Center(
                 child: MaterialButton(
                   height: 50.0,
-                  onPressed: () {},
+                  onPressed: () async{
+                    dynamic result = await _authProcess.signInAnonnymous();
+                    if(result == null){
+                      print('error');
+                    }
+                    else{
+                      print(result.uid);
+                    }
+                  },
                   color: kgobutton,
                   textColor: Colors.white,
                   child: Text('Go', style: kbuttontxtstyle),
