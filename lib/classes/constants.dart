@@ -5,3 +5,6 @@ const ktitleTextStyle =
 const kinputTextStyle = TextStyle(color: Color(0x8A000000), fontSize: 16.0);
 const kgobutton = Color(0xFF85624E);
 const kbuttontxtstyle = TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold);
+
+const ktitleTextStyleRegister = TextStyle(
+    fontSize: 30.0, color: Color(0XFF343434), fontWeight: FontWeight.bold);
