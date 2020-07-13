@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:messagingapp/classes/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:messagingapp/process/authProcess.dart';
+import 'package:messagingapp/screens/registerui.dart';
 
 final databaseReference = Firestore.instance;
 
@@ -13,23 +14,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-  void createRecord() async {
-    await databaseReference.collection("books").document("qwerrt").setData({
-      'title': 'Mastering Flutter',
-      'description': 'Programming Guide for Dart'
-    });
-
-    DocumentReference ref = await databaseReference.collection("books").add({
-      'title': 'Flutter in Action',
-      'description': 'Complete Programming Guide to learn Flutter'
-    });
-    print(ref.documentID);
-  }
   
   @override
   Widget build(BuildContext context) {
     var checkBoxValue = false;
+    String email;
+    String password;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -77,6 +67,9 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(),
                         ),
+                        onChanged: (val){
+                          email = val;
+                        },
                       ),
                     )
                   ],
@@ -116,6 +109,9 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
                           ),
+                          onChanged: (val){
+                            password = val;
+                          },
                         ),
                       ]),
                     )
@@ -145,12 +141,17 @@ class _LoginState extends State<Login> {
                 child: MaterialButton(
                   height: 50.0,
                   onPressed: () async{
-                    dynamic result = await _authProcess.signInAnonnymous();
-                    if(result == null){
+                    if(email != null && password != null){
+                      dynamic result = await _authProcess.signInEmailAndPassword(email,password);
+                       if(result == null){
                       print('error');
+                      }
+                      else{
+                        print(result.uid);
+                      }
                     }
                     else{
-                      print(result.uid);
+                      print('All fields should be filled up');
                     }
                   },
                   color: kgobutton,
@@ -166,11 +167,19 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Text('Dont have an account?'),
                   SizedBox(width: 5.0),
-                  Text(
-                    'Sign up',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Color(0xFF85624E),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterUi()),
+                      );
+                    },
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Color(0xFF85624E),
+                      ),
                     ),
                   ),
                 ],
