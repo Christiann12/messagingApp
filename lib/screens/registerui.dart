@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:messagingapp/classes/constants.dart';
 import 'package:messagingapp/process/authProcess.dart';
 import 'package:messagingapp/screens/login.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 AuthProcess _auth = AuthProcess();
 
@@ -11,9 +13,10 @@ class RegisterUi extends StatefulWidget {
 }
 
 class _RegisterUiState extends State<RegisterUi> {
-
   String email;
   String password;
+  DateTime _dateTime;
+  String gender = 'Gender';
 
   bool checkBoxValue = false;
   @override
@@ -24,6 +27,7 @@ class _RegisterUiState extends State<RegisterUi> {
           child: Column(
             children: <Widget>[
               Container(
+                margin: EdgeInsets.only(bottom: 20.0),
                 height: 145.0,
                 child: Stack(
                   children: <Widget>[
@@ -37,11 +41,11 @@ class _RegisterUiState extends State<RegisterUi> {
                       top: 40.0,
                       left: 15.0,
                       child: GestureDetector(
-                          child: Icon(
+                        child: Icon(
                           Icons.arrow_back_ios,
                           size: 30.0,
                         ),
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                       ),
@@ -65,122 +69,188 @@ class _RegisterUiState extends State<RegisterUi> {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 50.0,
-                  left: 40.0,
-                  right: 40.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Name',
-                      style: kinputTextStyle,
-                    ),
-                    Container(
-                      height: 30.0,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 30.0,
+                    width: 130.0,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'First Name',
+                        border: OutlineInputBorder(),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 30.0,
-                  left: 40.0,
-                  right: 40.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'E-mail',
-                      style: kinputTextStyle,
                     ),
-                    Container(
-                      height: 30.0,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                        ),
-                        onChanged: (val){
-                          email = val;
-                          print(email);
+                  ),
+                  SizedBox(width: 15.0),
+                  Container(
+                    height: 30.0,
+                    width: 130.0,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(15.0),
+                    height: 30.0,
+                    width: 275.0,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (val) {
+                        email = val;
+                        print(email);
+                      },
+                    ),
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 30.0,
+                    width: 275.0,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (val) {
+                        password = val;
+                        print(password);
+                      },
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(1930, 1, 1),
+                              maxTime: DateTime(2020, 7, 17),
+                              onChanged: (date) {
+                            print('change $date');
+                          }, onConfirm: (date) {
+                            setState(() {
+                              _dateTime = date;
+                            });
+                          },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en);
                         },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 30.0,
-                  left: 40.0,
-                  right: 40.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Password',
-                          style: kinputTextStyle,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(left: 42.0, top: 15.0),
+                              height: 30.0,
+                              width: 130.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    _dateTime == null
+                                        ? 'Birthday'
+                                        : _dateTime
+                                            .toIso8601String()
+                                            .substring(0, 10),
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15.0, top: 15.0),
+                        height: 30.0,
+                        width: 130.0,
+                        child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Center(
+                              child: DropdownButton<String>(
+                                value: gender,
+                                icon: Icon(Icons.arrow_downward),
+                                iconSize: 15,
+                                elevation: 0,
+                                underline: Container(
+                                  height: 0,
+                                  color: Colors.white,
+                                ),
+                                style: TextStyle(color: Colors.grey[600]),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    gender = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Gender',
+                                  'Male',
+                                  'Female',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 28.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Checkbox(
+                            value: checkBoxValue,
+                            activeColor: Colors.blue,
+                            onChanged: (bool newValue) {
+                              setState(() {
+                                checkBoxValue = newValue;
+                              });
+                            }),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'I agree to the ',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            ),
+                            Text(
+                              'terms and conditions ',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                    Container(
-                      height: 30.0,
-                      child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                        ),
-                        onChanged: (val){
-                          password = val;
-                          print(password);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 0.0),
-                      child: Row(
-                        children: <Widget>[
-                          Checkbox(
-                              value: checkBoxValue,
-                              activeColor: Colors.blue,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkBoxValue = newValue;
-                                });
-                              }),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                'I agree to the ',
-                                style: TextStyle(
-                                    color: Colors.grey, fontSize: 12.0),
-                              ),
-                              Text(
-                                'terms and conditions ',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12.0,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Stack(
                 children: <Widget>[
@@ -201,23 +271,22 @@ class _RegisterUiState extends State<RegisterUi> {
                               MaterialButton(
                                 height: 50.0,
                                 onPressed: () async {
-                                  
-                                  if(email != null && password != null){
-                                    if(password.length < 6){
-                                      print('password should be morethan or equal to 6 characters');
-                                    }
-                                    else{
-                                      dynamic result = await _auth.registerEmailAndPassword(email, password);
-                                      
-                                      if(result == null){
+                                  if (email != null && password != null) {
+                                    if (password.length < 6) {
+                                      print(
+                                          'password should be morethan or equal to 6 characters');
+                                    } else {
+                                      dynamic result =
+                                          await _auth.registerEmailAndPassword(
+                                              email, password);
+
+                                      if (result == null) {
                                         print('error');
-                                      }
-                                      else{
+                                      } else {
                                         Navigator.pop(context);
                                       }
                                     }
-                                  }
-                                  else{
+                                  } else {
                                     print('all fields should be filled');
                                   }
                                 },
@@ -234,14 +303,14 @@ class _RegisterUiState extends State<RegisterUi> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.pop(context);
                                     },
                                     child: Text('Sign in',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      decoration:
-                                    TextDecoration.underline)),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            decoration:
+                                                TextDecoration.underline)),
                                   ),
                                 ],
                               )
