@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:messagingapp/classes/constants.dart';
 import 'package:messagingapp/process/authProcess.dart';
-import 'package:messagingapp/screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 

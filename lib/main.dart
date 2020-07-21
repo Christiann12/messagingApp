@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:messagingapp/process/authProcess.dart';
-import 'package:messagingapp/screens/registerui.dart';
 import 'package:messagingapp/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'classes/user.dart';
