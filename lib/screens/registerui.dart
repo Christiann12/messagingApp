@@ -15,9 +15,13 @@ class _RegisterUiState extends State<RegisterUi> {
   String email;
   String password;
   DateTime _dateTime;
+  String bday;
+  String firstName;
+  String lastName;
   String gender = 'Gender';
 
   bool checkBoxValue = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +83,9 @@ class _RegisterUiState extends State<RegisterUi> {
                         labelText: 'First Name',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (val){
+                        firstName = val;
+                      },
                     ),
                   ),
                   SizedBox(width: 15.0),
@@ -90,6 +97,9 @@ class _RegisterUiState extends State<RegisterUi> {
                         labelText: 'Last Name',
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (val){
+                        lastName = val;
+                      },
                     ),
                   ),
                 ],
@@ -146,6 +156,7 @@ class _RegisterUiState extends State<RegisterUi> {
                           }, onConfirm: (date) {
                             setState(() {
                               _dateTime = date;
+                              bday = _dateTime.toIso8601String().substring(0, 10);
                             });
                           },
                               currentTime: DateTime.now(),
@@ -270,14 +281,14 @@ class _RegisterUiState extends State<RegisterUi> {
                               MaterialButton(
                                 height: 50.0,
                                 onPressed: () async {
-                                  if (email != null && password != null) {
+                                  if (email != null && password != null && firstName != null && lastName != null && bday != null && gender != null && gender != 'Gender') {
                                     if (password.length < 6) {
                                       print(
                                           'password should be morethan or equal to 6 characters');
                                     } else {
                                       dynamic result =
                                           await _auth.registerEmailAndPassword(
-                                              email, password);
+                                              email, password, firstName, lastName, bday, gender);
 
                                       if (result == null) {
                                         print('error');
