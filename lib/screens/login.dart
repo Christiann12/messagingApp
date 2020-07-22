@@ -144,11 +144,11 @@ class _LoginState extends State<Login> {
                     if(email != null && password != null){
                       dynamic result = await _authProcess.signInEmailAndPassword(email,password);
                        if(result == null){
-                      print('error');
-                      }
-                      else{
+                        print('error');
+                       }
+                       else{
                         print(result.uid);
-                      }
+                       }
                     }
                     else{
                       print('All fields should be filled up');
