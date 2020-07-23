@@ -26,8 +26,10 @@ class _RegisterUiState extends State<RegisterUi> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(bottom: 20.0),
@@ -80,10 +82,11 @@ class _RegisterUiState extends State<RegisterUi> {
                     width: 130.0,
                     child: TextField(
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 10),
                         labelText: 'First Name',
                         border: OutlineInputBorder(),
                       ),
-                      onChanged: (val){
+                      onChanged: (val) {
                         firstName = val;
                       },
                     ),
@@ -94,10 +97,11 @@ class _RegisterUiState extends State<RegisterUi> {
                     width: 130.0,
                     child: TextField(
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 10),
                         labelText: 'Last Name',
                         border: OutlineInputBorder(),
                       ),
-                      onChanged: (val){
+                      onChanged: (val) {
                         lastName = val;
                       },
                     ),
@@ -113,6 +117,8 @@ class _RegisterUiState extends State<RegisterUi> {
                     width: 275.0,
                     child: TextField(
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(right: 0),
+                        prefixIcon: Icon(Icons.mail),
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
@@ -133,7 +139,27 @@ class _RegisterUiState extends State<RegisterUi> {
                     child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(right: 0),
+                        prefixIcon: Icon(Icons.lock),
                         labelText: 'Password',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (val) {
+                        password = val;
+                        print(password);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    height: 30.0,
+                    width: 275.0,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(right: 0),
+                        prefixIcon: Icon(Icons.lock),
+                        labelText: 'Confirm Password',
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (val) {
@@ -156,7 +182,8 @@ class _RegisterUiState extends State<RegisterUi> {
                           }, onConfirm: (date) {
                             setState(() {
                               _dateTime = date;
-                              bday = _dateTime.toIso8601String().substring(0, 10);
+                              bday =
+                                  _dateTime.toIso8601String().substring(0, 10);
                             });
                           },
                               currentTime: DateTime.now(),
@@ -262,75 +289,92 @@ class _RegisterUiState extends State<RegisterUi> {
                   ),
                 ],
               ),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    child: Image(
-                      image: AssetImage('images/register(lowerpart).png'),
-                    ),
-                  ),
-                  Positioned(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: Column(
-                            children: <Widget>[
-                              MaterialButton(
-                                height: 50.0,
-                                onPressed: () async {
-                                  if (email != null && password != null && firstName != null && lastName != null && bday != null && gender != null && gender != 'Gender') {
-                                    if (password.length < 6) {
-                                      print(
-                                          'password should be morethan or equal to 6 characters');
-                                    } else {
-                                      dynamic result =
-                                          await _auth.registerEmailAndPassword(
-                                              email, password, firstName, lastName, bday, gender);
-
-                                      if (result == null) {
-                                        print('error');
-                                      } else {
-                                        Navigator.pop(context);
-                                      }
-                                    }
-                                  } else {
-                                    print('all fields should be filled');
-                                  }
-                                },
-                                color: kgobutton,
-                                textColor: Colors.white,
-                                child: Text('Go', style: kbuttontxtstyle),
-                                padding: EdgeInsets.all(16),
-                                shape: CircleBorder(),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                    'Already have account?  ',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Sign in',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            decoration:
-                                                TextDecoration.underline)),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+              Container(
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 300,
+                      child: FittedBox(
+                        child: Image(
+                          image: AssetImage('images/register(lowerpart).png'),
                         ),
-                      ],
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Column(
+                              children: <Widget>[
+                                MaterialButton(
+                                  height: 50.0,
+                                  onPressed: () async {
+                                    if (email != null &&
+                                        password != null &&
+                                        firstName != null &&
+                                        lastName != null &&
+                                        bday != null &&
+                                        gender != null &&
+                                        gender != 'Gender') {
+                                      if (password.length < 6) {
+                                        print(
+                                            'password should be morethan or equal to 6 characters');
+                                      } else {
+                                        dynamic result = await _auth
+                                            .registerEmailAndPassword(
+                                                email,
+                                                password,
+                                                firstName,
+                                                lastName,
+                                                bday,
+                                                gender);
+
+                                        if (result == null) {
+                                          print('error');
+                                        } else {
+                                          Navigator.pop(context);
+                                        }
+                                      }
+                                    } else {
+                                      print('all fields should be filled');
+                                    }
+                                  },
+                                  color: kgobutton,
+                                  textColor: Colors.white,
+                                  child: Text('Go', style: kbuttontxtstyle),
+                                  padding: EdgeInsets.all(16),
+                                  shape: CircleBorder(),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Already have account?  ',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Sign in',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              decoration:
+                                                  TextDecoration.underline)),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

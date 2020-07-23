@@ -14,7 +14,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
   @override
   Widget build(BuildContext context) {
     var checkBoxValue = false;
@@ -57,17 +56,19 @@ class _LoginState extends State<Login> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'E-mail',
-                      style: kinputTextStyle,
-                    ),
+                    // Text(
+                    //   'E-mail',
+                    //   style: kinputTextStyle,
+                    // ),
                     Container(
                       height: 30.0,
                       child: TextField(
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.mail),
+                          hintText: 'E-mail',
                           border: UnderlineInputBorder(),
                         ),
-                        onChanged: (val){
+                        onChanged: (val) {
                           email = val;
                         },
                       ),
@@ -83,14 +84,14 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          'Password',
-                          style: kinputTextStyle,
-                        ),
-                        Text(
-                          'Forgot?',
-                          style: TextStyle(fontSize: 10.0, color: Colors.grey),
-                        ),
+                        // Text(
+                        //   'Password',
+                        //   style: kinputTextStyle,
+                        // ),
+                        // Text(
+                        //   'Forgot?',
+                        //   style: TextStyle(fontSize: 10.0, color: Colors.grey),
+                        // ),
                       ],
                     ),
                     Container(
@@ -107,9 +108,11 @@ class _LoginState extends State<Login> {
                         TextField(
                           obscureText: true,
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            hintText: 'Password',
                             border: UnderlineInputBorder(),
                           ),
-                          onChanged: (val){
+                          onChanged: (val) {
                             password = val;
                           },
                         ),
@@ -140,17 +143,16 @@ class _LoginState extends State<Login> {
               Center(
                 child: MaterialButton(
                   height: 50.0,
-                  onPressed: () async{
-                    if(email != null && password != null){
-                      dynamic result = await _authProcess.signInEmailAndPassword(email,password);
-                       if(result == null){
+                  onPressed: () async {
+                    if (email != null && password != null) {
+                      dynamic result = await _authProcess
+                          .signInEmailAndPassword(email, password);
+                      if (result == null) {
                         print('error');
-                       }
-                       else{
+                      } else {
                         print(result.uid);
-                       }
-                    }
-                    else{
+                      }
+                    } else {
                       print('All fields should be filled up');
                     }
                   },
@@ -168,7 +170,7 @@ class _LoginState extends State<Login> {
                   Text('Dont have an account?'),
                   SizedBox(width: 5.0),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterUi()),
