@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:messagingapp/process/authProcess.dart';
+import 'package:messagingapp/screens/homescreen.dart';
 import 'package:messagingapp/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'classes/user.dart';
@@ -14,7 +15,9 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthProcess().user,
-      child: MaterialApp(home: Wrapper()),
+      child: MaterialApp(
+          home:
+              Wrapper()), //wrapper dapat yung sa homescreen..pinaltan ko lang pantest HGAHAHAHA
     );
   }
 }
