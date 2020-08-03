@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:messagingapp/process/authProcess.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 final AuthProcess _auth = AuthProcess();
 
@@ -11,13 +13,15 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('~ kk:mm').format(now);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         bottomOpacity: 0.0,
         backgroundColor: Colors.white,
         leading: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50.0),
             child: Image.asset('images/tzuyu.jpg'),
@@ -106,6 +110,54 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+              height: 70.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                textBaseline: TextBaseline.alphabetic,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(200.0),
+                      child: Image.asset('images/chaeyoung.jpg'),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      SizedBox(height: 10.0),
+                      Text(
+                        'Son Chae-young',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20.0),
+                      ),
+                      SizedBox(height: 5.0),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'HAHAHAHA <3 <3',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          SizedBox(width: 5.0),
+                          Text(
+                            '$formattedDate',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 40.0),
+                  Icon(
+                    Icons.check_circle,
+                    size: 20.0,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -114,22 +166,49 @@ class _HomescreenState extends State<Homescreen> {
         child: Container(
           padding: EdgeInsets.only(top: 10.0),
           height: 60.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Icon(Icons.message),
-                  Text('Chats'),
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Icon(Icons.people),
-                  Text('People'),
-                ],
-              ),
-            ],
+          child: GestureDetector(
+            onTap: () {
+              Alert(
+                  context: context,
+                  title: "Find friends",
+                  content: Column(
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.account_circle),
+                          labelText: 'Username',
+                        ),
+                      ),
+                    ],
+                  ),
+                  buttons: [
+                    DialogButton(
+                      color: Color(0xFF85624E),
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Send Request",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    )
+                  ]).show();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Icon(Icons.message),
+                    Text('Chats'),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Icon(Icons.people),
+                    Text('People'),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
